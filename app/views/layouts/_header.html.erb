@@ -1,0 +1,22 @@
+<nav class="container px-10 py-5 mx-auto w-full">
+  <div class="flex justify-between items-center">
+    <% if user_signed_in? %>
+        <div class="flex gap-10 items-center text-[#0A3D62]">
+            <h1 class="text-4xl text-[#0A3D62]"><%= link_to "Do.it", "/" %></h1>
+            <%= link_to "Profile", edit_user_registration_path %>
+            <%= link_to "Dashboard", root_path %>
+            <%= button_to "Logout", destroy_user_session_path, method: :delete %>
+        </div>
+        <div>
+            <%= link_to "+ New Board", new_board_path, class: "px-4 py-2 bg-[#0A3D62] text-[#fff] rounded-md" %>
+        </div>
+    <% else %>
+        <h1 class="text-4xl text-[#0A3D62]"><%= link_to "Do.it", "/" %></h1>
+        <div class="flex gap-5 items-center text-[#0A3D62]">
+            <%= link_to "Register", new_user_registration_path %>
+            <%= link_to "Login", new_user_session_path %>
+        </div>
+    <% end %>
+  </div>
+</nav>
+<hr>

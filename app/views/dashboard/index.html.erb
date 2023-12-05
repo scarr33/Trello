@@ -1,0 +1,32 @@
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:p-8">
+    <div class="mx-auto max-w-5xl">
+        <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <% @boards.each do |board| %>
+                <li class="col-span-1 divide-y divide-gray-200 rounded-lg border-2 border-gray-950 bg-white shadow">
+                    <div class="flex w-full items-center justify-between space-x-6 p-6">
+                        <div class="flex-1 truncate">
+                            <div class="flex items-center space-x-3">
+                                <h3 class="truncate text-sm font-medium text-gray-900"><%= link_to board.name, board_path(board) %></h3>
+                            </div>
+                            <p class="mt-1 truncate text-sm text-gray-500">Description</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="-mt-px flex divide-x divide-gray-200">
+                            <div class="flex w-0 flex-1">
+                                <%= link_to edit_board_path(board), class:"relative inline-flex w-0 flex-1 items-center justify-center rounded-bl-md bg-[#0A3D62] text-white border border-transparent py-4" do %>
+                                    <span class="ml-3">Edit</span>
+                                <% end %>
+                            </div>
+                            <div class="-ml-px flex w-0 flex-1">
+                                <%= link_to board_path(board), data: { "turbo-method": :delete }, class:"relative inline-flex w-0 flex-1 items-center justify-center rounded-br-md bg-[#E55039] text-white border border-transparent py-4" do %>
+                                    <span class="ml-3 text-white">Delete</span>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+</div>

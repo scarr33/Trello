@@ -1,0 +1,10 @@
+<div class="container px-10 mx-auto flex flex-col justify-center items-center gap-10 md:flex-row">
+    <div class="left basis-full flex flex-col gap-5 md:basis-1/2">
+        <h1 class="text-2xl font-medium pt-5 lg:text-5xl font-semibold md:pt-0">A personalised project management app.</h1>
+        <p class="text-base lg:text-lg">Simple, flexible, and powerful. All it takes are boards, lists, and cards to get a clear view of who’s doing what and what needs to get done. Learn more in our guide for getting started.</p>
+        <%= link_to "Get Started", new_user_registration_path, class: "px-4 py-2 w-fit bg-[#0A3D62] text-[#fff] rounded-md" %>
+    </div>
+    <div class="right basis-full md:basis-1/2">
+        <%= image_tag "business-discussion.svg", class:"w-full" %>
+    </div>
+</div>

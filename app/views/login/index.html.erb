@@ -1,0 +1,23 @@
+<nav class="container px-5 py-5 mx-auto w-full">
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-4xl text-[#0A3D62]"><%= link_to "Do.it", "/" %></h1>
+    </div>
+    <div class="flex gap-5 text-[#0A3D62]">
+      <%= link_to "Register", new_user_registration_path %>
+      <%= link_to "Login", new_user_session_path %>
+    </div>
+  </div>
+</nav>
+<hr>
+<main class="flex items-center flex-col gap-10 mt-10">
+  <h1 class="text-4xl text-[#0A3D62]">Do.it</h1>
+  <p>Log in to your account</p>
+  <form class="flex flex-col gap-2 drop-shadow-lg md:w-1/4">
+    <label for="email">Email:</label>
+    <input class="rounded-md" type="email" id="email" name="email">
+    <label for="password">Password:</label>
+    <input class="rounded-md" type="password" id="password" name="password">
+    <button type="submit" class="signupbtn bg-[#0A3D62] text-white py-2 mt-2 rounded-md">Login</button>
+  </form>
+</main>

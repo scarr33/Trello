@@ -1,6 +1,7 @@
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:p-8">
     <div class="mx-auto max-w-5xl">
         <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <% if current_user.present? %>
             <% @boards.each do |board| %>
                 <li class="col-span-1 divide-y divide-gray-200 rounded-lg border-2 border-gray-950 bg-white shadow">
                     <div class="flex w-full items-center justify-between space-x-6 p-6">
@@ -8,7 +9,11 @@
                             <div class="flex items-center space-x-3">
                                 <h3 class="truncate text-sm font-medium text-gray-900"><%= link_to board.name, board_path(board) %></h3>
                             </div>
-                            <p class="mt-1 truncate text-sm text-gray-500">Description</p>
+                            <%
+=begin%>
+ <p class="mt-1 truncate text-sm text-gray-500">Description</p> 
+<%
+=end%>
                         </div>
                     </div>
                     <div>
@@ -19,7 +24,7 @@
                                 <% end %>
                             </div>
                             <div class="-ml-px flex w-0 flex-1">
-                                <%= link_to board_path(board), data: { "turbo-method": :delete }, class:"relative inline-flex w-0 flex-1 items-center justify-center rounded-br-md bg-[#E55039] text-white border border-transparent py-4" do %>
+                                <%= link_to board_path(board), data: { "turbo-method": :delete }, class:"relative inline-flex w-0 flex-1 items-center justify-center rounded-br-md bg-[#E55039] text-white border border-transparent py-4", id:"show-modal-div", onclick:"alert('Are you sure?')" do %>
                                     <span class="ml-3 text-white">Delete</span>
                                 <% end %>
                             </div>
@@ -27,6 +32,9 @@
                     </div>
                 </li>
             <% end %>
+        <% end %>
         </ul>
     </div>
 </div>
+
+<%= render "shared/delete" %>

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_04_072909) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_22_064812) do
+  create_table "board_users", force: :cascade do |t|
+    t.integer "board_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_board_users_on_board_id"
+    t.index ["user_id"], name: "index_board_users_on_user_id"
+  end
+
   create_table "boards", force: :cascade do |t|
     t.string "name"
     t.integer "user_id", null: false
@@ -19,12 +28,22 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_04_072909) do
     t.index ["user_id"], name: "index_boards_on_user_id"
   end
 
+  create_table "item_members", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_item_members_on_item_id"
+    t.index ["user_id"], name: "index_item_members_on_user_id"
+  end
+
   create_table "items", force: :cascade do |t|
     t.integer "list_id", null: false
     t.string "title"
     t.string "class_list"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
     t.index ["list_id"], name: "index_items_on_list_id"
   end
 
@@ -49,7 +68,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_04_072909) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "board_users", "boards"
+  add_foreign_key "board_users", "users"
   add_foreign_key "boards", "users"
+  add_foreign_key "item_members", "items"
+  add_foreign_key "item_members", "users"
   add_foreign_key "items", "lists"
   add_foreign_key "lists", "boards"
 end

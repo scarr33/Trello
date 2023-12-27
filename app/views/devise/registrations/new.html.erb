@@ -19,6 +19,11 @@
         <%= f.password_field :password, autocomplete: "new-password", class:"w-full rounded-md" %>
       </div>
 
+      <div class="field w-full">
+        <%=f.label :password_confirmation %>
+        <%=f.password_field :password_confirmation, class:"w-full rounded-md"%>
+      </div>
+
 
       <div class="actions w-full">
         <%= f.submit "Sign up", class:"w-full text-white py-2 bg-[#0A3D62] rounded-md"%>

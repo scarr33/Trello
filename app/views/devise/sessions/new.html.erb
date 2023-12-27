@@ -15,12 +15,16 @@
         <%= f.password_field :password, autocomplete: "current-password", class:"w-full rounded-md" %>
       </div>
 
-      <% if devise_mapping.rememberable? %>
+      <%
+=begin%>
+ <% if devise_mapping.rememberable? %>
         <div class="flex items-center">
           <%= f.check_box :remember_me, class:"rounded-md mr-2" %>
           <%= f.label :remember_me %>
         </div>
-      <% end %>
+      <% end %> 
+<%
+=end%>
 
       <div class="actions w-full">
         <%= f.submit "Log in", class:"w-full text-white py-2 bg-[#0A3D62] rounded-md" %>

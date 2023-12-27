@@ -3,13 +3,24 @@
     <% if user_signed_in? %>
         <div class="flex gap-10 items-center text-[#0A3D62]">
             <h1 class="text-4xl text-[#0A3D62]"><%= link_to "Do.it", "/" %></h1>
-            <%= link_to "Profile", edit_user_registration_path %>
+            <%
+=begin%>
+ <%= link_to "Profile", edit_user_registration_path %> 
+<%
+=end%>
+            <%= link_to "Profile", '/users/profile' %>
             <%= link_to "Dashboard", root_path %>
             <%= button_to "Logout", destroy_user_session_path, method: :delete %>
         </div>
+        <% if controller_name == "boards" && action_name == "show" %>
         <div>
-            <%= link_to "+ New Board", new_board_path, class: "px-4 py-2 bg-[#0A3D62] text-[#fff] rounded-md" %>
+            <%= link_to "+ New List", new_board_list_path(@board), class: "px-4 py-2 bg-[#0A3D62] text-[#fff] rounded-md" %>
         </div>
+        <% else %>
+            <div>
+            <%= link_to "+ New Board", new_board_path, class: "px-4 py-2 bg-[#0A3D62] text-[#fff] rounded-md" %>
+            </div>  
+        <% end %>
     <% else %>
         <h1 class="text-4xl text-[#0A3D62]"><%= link_to "Do.it", "/" %></h1>
         <div class="flex gap-5 items-center text-[#0A3D62]">

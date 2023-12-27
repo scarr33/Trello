@@ -1,120 +1,170 @@
 import { Controller } from "@hotwired/stimulus";
+import { get, map, isNull } from "lodash-es";
+// import axios from "axios";
 
 export default class extends Controller {
-  connect() {
-    // console.log("Hello World from boards stimulus Controller");
-    let board = [
-      {
-        id: "board-id-1",
-        title: "Board Title 1",
-        item: [
-          {
-            id: "item-id-1",
-            title: "Item 1",
-            username: "username1",
-          },
-          {
-            id: "item-id-2",
-            title: "Item 2",
-            username: "username2",
-          },
-          {
-            id: "item-id-3",
-            title: "Item 3",
-            username: "username2",
-          },
-          {
-            id: "item-id-4",
-            title: "Item 4",
-            username: "username2",
-          },
-        ],
-      },
-      {
-        id: "board-id-2",
-        title: "Board Title 2",
-        item: [
-          {
-            id: "item-id-1",
-            title: "Item 1",
-            username: "username1",
-          },
-          {
-            id: "item-id-2",
-            title: "Item 2",
-            username: "username2",
-          },
-        ],
-      },
-      {
-        id: "board-id-3",
-        title: "Board Title 3",
-        item: [
-          {
-            id: "item-id-1",
-            title: "Item 1",
-            username: "username1",
-          },
-          {
-            id: "item-id-2",
-            title: "Item 2",
-            username: "username2",
-          },
-          {
-            id: "item-id-3",
-            title: "Item 3",
-            username: "username2",
-          },
-        ],
-      },
-      {
-        id: "board-id-4",
-        title: "Board Title 4",
-        item: [
-          {
-            id: "item-id-1",
-            title: "Item 1",
-            username: "username1",
-          },
-          {
-            id: "item-id-2",
-            title: "Item 2",
-            username: "username2",
-          },
-        ],
-      },
-    ];
-    var kanban = new jKanban({
-      element: "#board", // selector of the kanban container
-      gutter: "15px", // gutter of the board
-      widthBoard: "250px", // width of the board
-      responsivePercentage: false, // if it is true I use percentage in the width of the boards and it is not necessary gutter and widthBoard
-      dragItems: true, // if false, all items are not draggable
-      boards: board, // json of boards
-      dragBoards: true, // the boards are draggable, if false only item can be dragged
-      itemAddOptions: {
-        enabled: false, // add a button to board for easy item creation
-        content: "+", // text or html content of the board button
-        class: "kanban-title-button btn btn-default btn-xs", // default class of the button
-        footer: false, // position the button on footer
-      },
-      itemHandleOptions: {
-        enabled: false, // if board item handle is enabled or not
-        handleClass: "item_handle", // css class for your custom item handle
-        customCssHandler: "drag_handler", // when customHandler is undefined, jKanban will use this property to set main handler class
-        customCssIconHandler: "drag_handler_icon", // when customHandler is undefined, jKanban will use this property to set main icon handler class. If you want, you can use font icon libraries here
-        customHandler: "<span class='item_handle'>+</span> %title% ", // your entirely customized handler. Use %title% to position item title
-        // any key's value included in item collection can be replaced with %key%
-      },
-      click: function (el) {}, // callback when any board's item are clicked
-      context: function (el, event) {}, // callback when any board's item are right clicked
-      dragEl: function (el, source) {}, // callback when any board's item are dragged
-      dragendEl: function (el) {}, // callback when any board's item stop drag
-      dropEl: function (el, target, source, sibling) {}, // callback when any board's item drop in a board
-      dragBoard: function (el, source) {}, // callback when any board stop drag
-      dragendBoard: function (el) {}, // callback when any board stop drag
-      buttonClick: function (el, boardId) {}, // callback when the board's button is clicked
-      propagationHandlers: [], // the specified callback does not cancel the browser event. possible values: "click", "context"
+  // HEADERS = { ACCEPT: "application/json" };
+
+  // HEADERS = { "Content-Type": "application/json" };
+
+  // buildClassList(classList) {
+  //   if (isNull(classList)) {
+  //     return "";
+  //   }
+
+  //   return classList.split(" ").join(", ");
+  // }
+
+  getHeaders() {
+    return Array.from(document.querySelectorAll(".kanban-board-header"));
+  }
+
+  getHeaderTitles() {
+    return Array.from(document.querySelectorAll(".kanban-title-board"));
+  }
+
+  cursorifyHeaderTitles() {
+    this.getHeaderTitles().forEach((headerTitle) => {
+      headerTitle.classList.add("cursor-pointer");
     });
+  }
+
+  addLinkToHeaderTitles(boards) {
+    this.getHeaderTitles().forEach((headerTitle, index) => {
+      headerTitle.addEventListener("click", () => {
+        Turbo.visit(
+          `${this.element.dataset.boardListsUrl}/${boards[index].id}/edit`
+        );
+      });
+    });
+  }
+
+  buildBoardDeleteButton(boardId) {
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add(
+      "kanban-title-button",
+      "btn",
+      "btn-default",
+      "btn-xs",
+      "mr-2"
+    );
+    deleteButton.textContent = "x";
+    deleteButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      fetch(`${this.element.dataset.boardListsUrl}/${boardId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(() => {
+        alert("Are you sure?");
+        Turbo.visit(window.location.href);
+        // location.reload();
+      });
+    });
+    return deleteButton;
+  }
+
+  addHeaderDeleteButtons(boards) {
+    this.getHeaders().forEach((header, index) => {
+      header.appendChild(this.buildBoardDeleteButton(boards[index].id));
+    });
+  }
+
+  buildItems(items) {
+    return map(items, (item) => {
+      return {
+        id: get(item, "id"),
+        title: get(item, "attributes.title"),
+      };
+    });
+  }
+
+  buildBoards(boardsData) {
+    return map(boardsData["data"], (board) => {
+      return {
+        id: get(board, "id"),
+        title: get(board, "attributes.title"),
+        item: this.buildItems(get(board, "attributes.items.data")),
+      };
+    });
+  }
+
+  populateItemInformation(el) {
+    console.log("element", el);
+    fetch(`/api/items/${el.dataset.eid}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        document.getElementById("show-modal-div").click();
+        document.getElementById("item-title").textContent = get(
+          data,
+          "data.attributes.title"
+        );
+        document.getElementById("item-description").textContent = get(
+          data,
+          "data.attributes.description"
+        );
+        document.getElementById("item-edit-link").href = `/lists/${get(
+          data,
+          `data.attributes.list_id`
+        )}/items/${el.dataset.eid}/edit`;
+
+        document.getElementById("item-delete-link").href = `/lists/${get(
+          data,
+          `data.attributes.list_id`
+        )}/items/${el.dataset.eid}`;
+
+        document.getElementById("item-assign-member-link").href = `/items/${get(
+          data,
+          `data.id`
+        )}/item_members/new`;
+      });
+  }
+
+  buildKanban(boards) {
+    new jKanban({
+      element: `#${this.element.id}`,
+      boards: boards,
+      itemAddOptions: {
+        enabled: true, // add a button to board for easy item creation
+        content: "+", // text or html content of the board button
+      },
+      click: (el) => {
+        this.populateItemInformation(el);
+      },
+      buttonClick: function (el, boardId) {
+        Turbo.visit(`/lists/${boardId}/items/new`);
+      },
+    });
+  }
+
+  getCurrentBoard() {
+    let url = window.location.href;
+    url = url.split("/");
+    return url[url.length - 1];
+  }
+
+  addBottomScrollMargin() {
+    this.element.firstElementChild.classList.add("mb-5");
+  }
+
+  connect() {
+    this.getCurrentBoard();
+    fetch(`/api/boards/${this.getCurrentBoard()}/lists`)
+      .then((res) => res.json())
+      .then((data) => {
+        this.buildKanban(this.buildBoards(data));
+        this.cursorifyHeaderTitles();
+        this.addLinkToHeaderTitles(this.buildBoards(data));
+        this.addHeaderDeleteButtons(this.buildBoards(data));
+        this.addBottomScrollMargin();
+      });
   }
 }

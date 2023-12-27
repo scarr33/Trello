@@ -11,13 +11,31 @@ Rails.application.routes.draw do
   root to: "home#index"
   get "/register", to:"register#index"
   get "/login", to:"login#index"
+  get "users/profile", to:"profile#index"
   get "/dashboard", to:"dashboard#index"
 
-  resources :boards, only: [:new, :edit, :create, :update, :destroy, :show]
+  # resources :boards, only: [:new, :edit, :create, :update, :destroy, :show]
+
+  resources :boards do
+    resources :lists, except: :show
+    resources :board_users, only: [:new, :create]
+  end
+
+  resources :items do
+    resources :item_members, only: [:new, :create]
+  end
+
+  resources :lists do
+    resources :items
+  end
+
 
   namespace :api do
     resources :boards do
       resources :lists, only: :index, controller: "lists"
     end
+    put "item_positions", to:"item_positions#update"
+
+    resources :items, only: :show
   end
 end

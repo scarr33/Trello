@@ -1,6 +1,15 @@
-<div class="mx-auto max-w-full px-24 py-12" data-controller="board">
-    <div class="mx-auto max-w-full">
-        <h1>Hello from Boards#controller</h1>
-        <div id="board" class="overflow-x-scroll"></div>
+<div class="mx-auto max-w-full px-24 py-12" >
+    <div class="mb-5">
+        <%= link_to "+ Add New Member", new_board_board_user_path(@board), class: "px-4 py-2 bg-[#0A3D62] text-[#fff] rounded-md" %>
+    </div>
+    <div data-controller="board overflow-x-scroll" 
+    data-api-url="<%= api_board_lists_path(@board) %>" 
+    data-board-lists-url="<%= board_lists_path(@board) %>" 
+    class="mx-auto max-w-full" 
+    id="board" 
+    style="overflow-x: scroll;"> 
     </div>
 </div>
+
+<%= render "shared/modal" %>
+

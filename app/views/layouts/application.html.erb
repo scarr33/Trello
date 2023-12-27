@@ -14,6 +14,14 @@
 
   <body>
       <%= render "layouts/header" %>
+      <div class="flex items-center justify-center">
+        <%
+=begin%>
+ <p class="notice"><%= notice %></p> 
+<%
+=end%>
+        <p class="alert text-red-500"><%= alert %></p>
+      </div>
       <%= yield %>
   </body>
 </html>

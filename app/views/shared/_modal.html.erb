@@ -48,6 +48,15 @@ aria-modal="true">
                     <p class="font-bold">Description:</p>
                     <p id="item-description"></p>
 
+                    <%
+=begin%>
+ <%= form_for @item, remote: true do |f| %>
+                        <%= f.file_field :avatar %>
+                        <%= f.submit "Add Images" %>
+                    <% end %> 
+<%
+=end%>
+
                     <div class="flex gap-5">
                         <div><%= link_to "Edit", "", class:"link text-blue-700" , id:"item-edit-link" %></div>
                         <div><%= link_to "Delete", "", class:"link text-red-700" , id:"item-delete-link", data: {"turbo-method": :delete }, onclick:"alert('Are you sure?')" %></div>

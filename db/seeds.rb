@@ -22,6 +22,11 @@
 # Board.find_each do |board|
 #   5.times {|i| List.create(board: board, title: "List #{i+1}")}
 
+#   List.create(board: board, title: "To Do")
+#   List.create(board: board, title: "In Progress")
+#   List.create(board: board, title: "In Review")
+#   List.create(board: board, title: "Done")
+
 #   board.reload.lists.each do |list|
 #     5.times {|i| Item.create(list: list, title: "Item #{i+1}", description: "Description for item #{i+1}")}
 #   end

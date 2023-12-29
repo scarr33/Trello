@@ -9,6 +9,7 @@ class BoardsController < ApplicationController
     @board = Board.new(board_params.merge(user: current_user))
 
     if @board.save
+      create_default_lists
       redirect_to root_path
     else
       render :new
@@ -30,6 +31,7 @@ class BoardsController < ApplicationController
 
   def show
     authorize board
+    @lists = board.lists
   end
 
   def destroy
@@ -45,5 +47,13 @@ class BoardsController < ApplicationController
 
   def board
     @board ||= Board.find(params[:id])
+  end
+
+  def create_default_lists
+    default_lists = ['To Do', 'In Progress', 'In Review', 'Done']
+
+    default_lists.each do |list_title|
+      @board.lists.create(title: list_title)
+    end
   end
 end

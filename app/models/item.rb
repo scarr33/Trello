@@ -6,4 +6,6 @@ class Item < ApplicationRecord
   has_many :item_members, dependent: :destroy
 
   has_many :members, through: :item_members, source: :user
+
+  has_one_attached :avatar
 end

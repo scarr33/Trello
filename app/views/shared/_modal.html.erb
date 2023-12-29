@@ -48,14 +48,10 @@ aria-modal="true">
                     <p class="font-bold">Description:</p>
                     <p id="item-description"></p>
 
-                    <%
-=begin%>
- <%= form_for @item, remote: true do |f| %>
-                        <%= f.file_field :avatar %>
-                        <%= f.submit "Add Images" %>
-                    <% end %> 
-<%
-=end%>
+                    <%= form_for Item.new do |f| %>
+                        <%= f.file_field :avatar, accept: "image/jpeg, image/png, image/gif," %>
+                        <%= f.submit "Attachment", class:"cursor-pointer border-solid"%>
+                    <% end %>
 
                     <div class="flex gap-5">
                         <div><%= link_to "Edit", "", class:"link text-blue-700" , id:"item-edit-link" %></div>

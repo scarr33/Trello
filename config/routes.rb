@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :boards do
-      resources :lists, only: :index, controller: "lists"
+      resources :lists, only: [:index, :update], controller: "lists"
     end
     put "item_positions", to:"item_positions#update"
 

@@ -52,8 +52,8 @@ class BoardsController < ApplicationController
   def create_default_lists
     default_lists = ['To Do', 'In Progress', 'In Review', 'Done']
 
-    default_lists.each do |list_title|
-      @board.lists.create(title: list_title)
+    default_lists.each_with_index do |list_title, index|
+      @board.lists.create(title: list_title, position: index)
     end
   end
 end

@@ -7,5 +7,5 @@ class Item < ApplicationRecord
 
   has_many :members, through: :item_members, source: :user
 
-  has_one_attached :avatar
+  has_one_attached :image
 end

@@ -198,10 +198,6 @@ export default class extends Controller {
         });
       },
       dragendBoard: (el) => {
-        // console.log("dragendBoard.el", el);
-        // console.log("board.id", el.dataset.id);
-        // console.log("board.position", el.dataset.order - 1);
-
         fetch(`${this.element.dataset.apiUrl}/${el.dataset.id}`, {
           method: "PUT",
           headers: {

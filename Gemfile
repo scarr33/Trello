@@ -33,6 +33,8 @@ gem "devise"
 
 gem "jsonapi-serializer"
 
+gem 'activerecord-import'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

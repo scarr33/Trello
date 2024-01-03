@@ -76,6 +76,7 @@ export default class extends Controller {
       return {
         id: get(item, "id"),
         title: get(item, "attributes.title"),
+        "list-id": get(item, "attributes.list_id"),
       };
     });
   }
@@ -141,6 +142,60 @@ export default class extends Controller {
       },
       buttonClick: function (el, boardId) {
         Turbo.visit(`/lists/${boardId}/items/new`);
+      },
+      dropEl: (el, target, source, sibling) => {
+        const targetItems = Array.from(
+          target.getElementsByClassName("kanban-item")
+        );
+        const sourceItems = Array.from(
+          source.getElementsByClassName("kanban-item")
+        );
+
+        targetItems.forEach((item, index) => {
+          item.dataset.position = index;
+          item.dataset.listId = target.closest(".kanban-board").dataset.id;
+        });
+
+        sourceItems.forEach((item, index) => {
+          item.dataset.position = index;
+          item.dataset.listId = source.closest(".kanban-board").dataset.id;
+        });
+
+        const targetItemData = map(targetItems, (item) => {
+          return {
+            id: item.dataset.eid,
+            position: item.dataset.position,
+            list_id: item.dataset.listId,
+          };
+        });
+
+        const sourceItemData = map(sourceItems, (item) => {
+          return {
+            id: item.dataset.eid,
+            position: item.dataset.position,
+            list_id: item.dataset.listId,
+          };
+        });
+
+        fetch(this.element.dataset.itemPositionsApiUrl, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: targetItemData,
+          }),
+        });
+
+        fetch(this.element.dataset.itemPositionsApiUrl, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: sourceItemData,
+          }),
+        });
       },
       dragendBoard: (el) => {
         // console.log("dragendBoard.el", el);

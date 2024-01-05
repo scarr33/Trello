@@ -126,6 +126,16 @@ export default class extends Controller {
           data,
           `data.id`
         )}/item_members/new`;
+
+        const imageUrl = get(data, "data.attributes.image_url");
+        console.log(imageUrl);
+        const imgElement = document.getElementById("item-image");
+        if (imageUrl) {
+          imgElement.src = imageUrl;
+          imgElement.style.display = "block"; // Show the image element
+        } else {
+          imgElement.style.display = "none"; // Hide the image element if no image URL
+        }
       });
   }
 
@@ -207,20 +217,6 @@ export default class extends Controller {
             position: el.dataset.order - 1,
           }),
         }).then((res) => console.log(res));
-
-        // axios
-        //   .put(
-        //     `${this.element.dataset.apiUrl}/${el.dataset.id}`,
-        //     {
-        //       position: el.dataset.order - 1,
-        //     },
-        //     {
-        //       headers: this.HEADERS,
-        //     }
-        //   )
-        //   .then((response) => {
-        //     console.log("response: ", response);
-        //   });
       },
     });
   }

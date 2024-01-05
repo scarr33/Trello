@@ -8,4 +8,12 @@ class Item < ApplicationRecord
   has_many :members, through: :item_members, source: :user
 
   has_one_attached :image
+
+  def image_url
+    Rails.application.routes.url_helpers.url_for(image) if image.attached?
+  end
+
+  # has_one_attached :image do |attachable|
+  #   attachable.service = :cloudinary
+  # end
 end

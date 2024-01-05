@@ -37,6 +37,6 @@ Rails.application.routes.draw do
     end
     put "item_positions", to:"item_positions#update"
 
-    resources :items, only: :show
+    resources :items, only: [:show, :update]
   end
 end

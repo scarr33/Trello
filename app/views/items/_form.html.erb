@@ -20,12 +20,29 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                         <div class="sm: col-span-6">
                             <%= f.label :description, class: "block text-sm font-medium text-gray-700" %>
                             <div class="mt-1">
                                 <%= f.text_area :description, class: "block w-full p-3 h-40 rounded-md border-gray-300 shadow-focus:border-indigo-500" %>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                        <div class="sm: col-span-6">
+                            <%= f.label :image, class: "block text-sm font-medium text-gray-700" %>
+                            <div class="mt-1">
+                                <%= f.file_field :image, id: "image-upload" %>
+                            </div>
+                        </div>
+                        <div class="image-preview">
+                            <% if item.image.attached? %>
+                                <%= image_tag item.image, style:"width: 200px; display: block", alt: "Image Preview" %>
+                            <% else %>
+                                <img id="preview" src="#" alt="No image selected" />
+                            <% end %>
                         </div>
                     </div>
                 </div>

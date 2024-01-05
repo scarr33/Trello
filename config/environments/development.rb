@@ -75,4 +75,8 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.active_storage.service = :cloudinary
+
+  Rails.application.routes.default_url_options = {
+  host: 'http://localhost:3000'
+}
 end

@@ -48,23 +48,8 @@ aria-modal="true">
                     <p class="font-bold">Description:</p>
                     <p id="item-description"></p>
 
-                    <%
-=begin%>
- <%= form_for Item.new do |f| %>
-                        <%= f.file_field :avatar, accept: "image/jpeg, image/png, image/gif," %>
-                        <%= f.submit "Attachment", class:"cursor-pointer border-solid"%>
-                    <% end %> 
-<%
-=end%>
-
-                    <%= form_with(model: @item, local: true, html: { multipart: true }) do |form| %>
-                        <div class="form-group">
-                            <%= form.label :image, 'Choose Image' %>
-                            <%= form.file_field :image, class: 'form-control-file' %>
-                        </div>
-
-                        <%= form.submit 'Upload Image', class: 'btn btn-primary' %>
-                    <% end %>
+                    <p class="font-bold">Image:</p>
+                    <img src="" id="item-image" class="object-contain h-24 w-32"></img>
 
                     <div class="flex gap-5">
                         <div><%= link_to "Edit", "", class:"link text-blue-700" , id:"item-edit-link" %></div>

@@ -16,6 +16,8 @@ class ListsController < ApplicationController
   def create
     @list = board.lists.new(list_params)
 
+    @list.position = board.lists.maximum(:position).to_i + 1
+
     if @list.save
       redirect_to board_path(board)
     else

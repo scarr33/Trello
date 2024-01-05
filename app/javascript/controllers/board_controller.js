@@ -236,15 +236,18 @@ export default class extends Controller {
   }
 
   connect() {
-    this.getCurrentBoard();
-    fetch(`/api/boards/${this.getCurrentBoard()}/lists`)
-      .then((res) => res.json())
-      .then((data) => {
-        this.buildKanban(this.buildBoards(data));
-        this.cursorifyHeaderTitles();
-        this.addLinkToHeaderTitles(this.buildBoards(data));
-        this.addHeaderDeleteButtons(this.buildBoards(data));
-        this.addBottomScrollMargin();
-      });
+    if (!this.element.dataset.boardInitialized) {
+      this.element.dataset.boardInitialized = true;
+      this.getCurrentBoard();
+      fetch(`/api/boards/${this.getCurrentBoard()}/lists`)
+        .then((res) => res.json())
+        .then((data) => {
+          this.buildKanban(this.buildBoards(data));
+          this.cursorifyHeaderTitles();
+          this.addLinkToHeaderTitles(this.buildBoards(data));
+          this.addHeaderDeleteButtons(this.buildBoards(data));
+          this.addBottomScrollMargin();
+        });
+    }
   }
 }

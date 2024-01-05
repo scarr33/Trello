@@ -91,6 +91,16 @@ export default class extends Controller {
     });
   }
 
+  buildImage(imageUrl) {
+    const imgElement = document.getElementById("item-image");
+    if (imageUrl) {
+      imgElement.src = imageUrl;
+      imgElement.style.display = "block"; // Show the image element
+    } else {
+      imgElement.style.display = "none"; // Hide the image element if no image URL
+    }
+  }
+
   populateItemInformation(el) {
     console.log("element", el);
     fetch(`/api/items/${el.dataset.eid}`, {
@@ -128,14 +138,8 @@ export default class extends Controller {
         )}/item_members/new`;
 
         const imageUrl = get(data, "data.attributes.image_url");
-        console.log(imageUrl);
-        const imgElement = document.getElementById("item-image");
-        if (imageUrl) {
-          imgElement.src = imageUrl;
-          imgElement.style.display = "block"; // Show the image element
-        } else {
-          imgElement.style.display = "none"; // Hide the image element if no image URL
-        }
+
+        this.buildImage(imageUrl);
       });
   }
 

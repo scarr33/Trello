@@ -146,9 +146,20 @@ export default class extends Controller {
 
         document.getElementById("item-members-list").innerHTML = null;
 
-        membersList.forEach((memberData) => {
-          document.getElementById("item-members-list").appendChild(memberData);
-        });
+        if (membersList.length > 0) {
+          membersList.forEach((memberData) => {
+            document
+              .getElementById("item-members-list")
+              .appendChild(memberData);
+          });
+          document
+            .getElementById("item-members-section")
+            .classList.add("block");
+        } else {
+          document
+            .getElementById("item-members-section")
+            .classList.add("hidden");
+        }
 
         const imageUrl = get(data, "data.attributes.image_url");
 

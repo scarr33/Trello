@@ -102,7 +102,6 @@ export default class extends Controller {
   }
 
   populateItemInformation(el) {
-    console.log("element", el);
     fetch(`/api/items/${el.dataset.eid}`, {
       method: "GET",
       headers: {
@@ -111,8 +110,6 @@ export default class extends Controller {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-
         document.getElementById("show-modal-div").click();
         document.getElementById("item-title").textContent = get(
           data,
@@ -137,6 +134,22 @@ export default class extends Controller {
           `data.id`
         )}/item_members/new`;
 
+        const membersList = map(
+          get(data, "data.attributes.members.data"),
+          (memberData) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = memberData.attributes.email;
+            listItem.classList.add("text-sm");
+            return listItem;
+          }
+        );
+
+        document.getElementById("item-members-list").innerHTML = null;
+
+        membersList.forEach((memberData) => {
+          document.getElementById("item-members-list").appendChild(memberData);
+        });
+
         const imageUrl = get(data, "data.attributes.image_url");
 
         this.buildImage(imageUrl);
@@ -152,7 +165,14 @@ export default class extends Controller {
         content: "+", // text or html content of the board button
       },
       click: (el) => {
-        this.populateItemInformation(el);
+        event.preventDefault();
+
+        // Check if the modal is already open
+        if (
+          !document.getElementById("show-modal-div").classList.contains("show")
+        ) {
+          this.populateItemInformation(el);
+        }
       },
       buttonClick: function (el, boardId) {
         Turbo.visit(`/lists/${boardId}/items/new`);

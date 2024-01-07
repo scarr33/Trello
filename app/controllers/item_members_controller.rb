@@ -11,7 +11,7 @@ class ItemMembersController < ApplicationController
     user_ids_to_destroy = item_user_ids - user_ids
 
     ItemMember.where(item: item, user_id: user_ids_to_destroy).delete_all
-    users_to_assign = User.where(id: user_ids)
+    users_to_assign = User.where(id: user_ids).where.not(id: item.reload.members.ids)
     item.members << users_to_assign
 
     redirect_to board_path(item.list.board)

@@ -14,4 +14,8 @@ class Board < ApplicationRecord
   def assign_user_as_member
     members << user
   end
+
+  def self.assigned_boards(user)
+    joins(:members).where("users.id = ?", user.id)
+  end
 end

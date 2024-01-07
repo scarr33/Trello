@@ -3,5 +3,7 @@ class DashboardController < ApplicationController
   def index
     # @boards = Board.all
     @boards = current_user.boards
+
+    @assigned_boards = Board.assigned_boards(current_user)
   end
 end

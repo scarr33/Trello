@@ -168,20 +168,32 @@ export default class extends Controller {
             .classList.add("hidden");
         }
 
+        const childIssuesList = map(
+          get(data, "data.attributes.child_issues"),
+          (childIssue) => {
+            const childIssueItem = document.createElement("li");
+            childIssueItem.textContent = childIssue.title;
+            childIssueItem.classList.add("text-sm");
+            return childIssueItem;
+          }
+        );
+
+        document.getElementById("item-child-issues-list").innerHTML = null;
+
+        if (childIssuesList.length > 0) {
+          childIssuesList.forEach((childIssue) => {
+            document
+              .getElementById("item-child-issues-list")
+              .appendChild(childIssue);
+          });
+          document.getElementById("item-child-issues").classList.add("block");
+        } else {
+          document.getElementById("item-child-issues").classList.add("hidden");
+        }
+
         const imageUrl = get(data, "data.attributes.image_url");
 
         this.buildImage(imageUrl);
-      });
-
-    fetch(`/api/items/${el.dataset.eid}/child_issue`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("child issue: ", data);
       });
   }
 

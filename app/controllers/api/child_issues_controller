@@ -1,0 +1,9 @@
+class Api::ChildIssuesController < ApplicationController
+  protect_from_forgery with: :null_session
+
+  def index
+    child_issue = ChildIssue.find(params[:id])
+
+    render json: ChildIssueSerializer.new(child_issue).serializable_hash.to_json
+  end
+end

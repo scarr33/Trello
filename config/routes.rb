@@ -29,6 +29,9 @@ Rails.application.routes.draw do
     resources :items
   end
 
+  resources :items do
+    resources :child_issues, only: [:new, :create]
+  end
 
   namespace :api do
     resources :boards do
@@ -37,6 +40,8 @@ Rails.application.routes.draw do
     end
     put "item_positions", to:"item_positions#update"
 
-    resources :items, only: [:show, :update]
+    resources :items, only: [:show, :update] do
+      resources :child_issue, only: [:new, :index], controller: "child_issues"
+    end
   end
 end

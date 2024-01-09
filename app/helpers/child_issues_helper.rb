@@ -1,0 +1,2 @@
+module ChildIssuesHelper
+end

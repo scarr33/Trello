@@ -46,6 +46,7 @@ class ItemsController < ApplicationController
     @list ||= List.find(params[:list_id])
   end
 
+
   def item_params
     params.require(:item).permit(:title, :description, :image, :image_url)
   end

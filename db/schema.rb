@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_04_094411) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_08_075230) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -54,6 +54,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_04_094411) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_boards_on_user_id"
+  end
+
+  create_table "child_issues", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "item_id", null: false
+    t.index ["item_id"], name: "index_child_issues_on_item_id"
   end
 
   create_table "item_members", force: :cascade do |t|
@@ -103,6 +112,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_04_094411) do
   add_foreign_key "board_users", "boards"
   add_foreign_key "board_users", "users"
   add_foreign_key "boards", "users"
+  add_foreign_key "child_issues", "items"
   add_foreign_key "item_members", "items"
   add_foreign_key "item_members", "users"
   add_foreign_key "items", "lists"

@@ -110,6 +110,8 @@ export default class extends Controller {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
+
         document.getElementById("show-modal-div").click();
         document.getElementById("item-title").textContent = get(
           data,
@@ -133,6 +135,11 @@ export default class extends Controller {
           data,
           `data.id`
         )}/item_members/new`;
+
+        document.getElementById("add-child-issue-link").href = `/items/${get(
+          data,
+          `data.id`
+        )}/child_issues/new`;
 
         const membersList = map(
           get(data, "data.attributes.members.data"),
@@ -164,6 +171,17 @@ export default class extends Controller {
         const imageUrl = get(data, "data.attributes.image_url");
 
         this.buildImage(imageUrl);
+      });
+
+    fetch(`/api/items/${el.dataset.eid}/child_issue`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("child issue: ", data);
       });
   }
 

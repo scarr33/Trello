@@ -5,6 +5,10 @@ class Item < ApplicationRecord
 
   has_many :item_members, dependent: :destroy
 
+  has_many :child_issues, dependent: :destroy
+
+  accepts_nested_attributes_for :child_issues
+
   has_many :members, through: :item_members, source: :user
 
   has_one_attached :image

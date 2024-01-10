@@ -33,13 +33,11 @@
                             <div class="flex w-full items-center justify-between space-x-6 p-6">
                                 <div class="flex-1 truncate">
                                     <div class="flex items-center space-x-3">
-                                        <h3 class="truncate text-sm font-medium text-gray-900"><%= link_to assigned_board.name, board_path(assigned_board) %> (Assigned)</h3>
+                                        <h3 class="truncate text-sm font-medium text-gray-900"><%= link_to assigned_board.name, board_path(assigned_board) %></h3>
                                     </div>
                                 </div>
                             </div>
-                            <%
-=begin%>
- <div>
+                            <div>
                                 <div class="-mt-px flex divide-x divide-gray-200">
                                     <div class="flex w-0 flex-1">
                                         <%= link_to edit_board_path(assigned_board), class:"relative inline-flex w-0 flex-1 items-center justify-center rounded-bl-md bg-[#0A3D62] text-white border border-transparent py-4" do %>
@@ -52,9 +50,7 @@
                                         <% end %>
                                     </div>
                                 </div>
-                            </div> 
-<%
-=end%>
+                            </div>
                         </li>
                     <% end %>
                     <% @boards.each do |board| %>
@@ -63,13 +59,11 @@
                                 <div class="flex w-full items-center justify-between space-x-6 p-6">
                                     <div class="flex-1 truncate">
                                         <div class="flex items-center space-x-3">
-                                            <h3 class="truncate text-sm font-medium text-gray-900"><%= link_to assigned_board.name, board_path(assigned_board) %> (Assigned)</h3>
+                                            <h3 class="truncate text-sm font-medium text-gray-900"><%= link_to assigned_board.name, board_path(assigned_board) %></h3>
                                         </div>
                                     </div>
                                 </div>
-                                <%
-=begin%>
- <div>
+                                <div>
                                     <div class="-mt-px flex divide-x divide-gray-200">
                                         <div class="flex w-0 flex-1">
                                             <%= link_to edit_board_path(assigned_board), class:"relative inline-flex w-0 flex-1 items-center justify-center rounded-bl-md bg-[#0A3D62] text-white border border-transparent py-4" do %>
@@ -82,9 +76,7 @@
                                             <% end %>
                                         </div>
                                     </div>
-                                </div> 
-<%
-=end%>
+                                </div>
                             </li>
                         <% end %>
                     <% end %>

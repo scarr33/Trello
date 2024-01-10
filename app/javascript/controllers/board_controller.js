@@ -144,7 +144,7 @@ export default class extends Controller {
         document.getElementById("child-issue-edit-link").href = `/items/${get(
           data,
           `data.id`
-        )}/child_issues/18/edit`;
+        )}/child_issues/22/edit`;
 
         const membersList = map(
           get(data, "data.attributes.members.data"),
@@ -181,6 +181,10 @@ export default class extends Controller {
             const childIssueDesc = document.createElement("li");
             childIssueTitle.textContent = childIssue.title;
             childIssueTitle.dataset.eid = childIssue.id;
+            // childIssueTitle.href = `/items/${get(
+            //   data,
+            //   `data.id`
+            // )}/child_issues/${dataset.eid}/edit`;
             childIssueDesc.textContent = childIssue.description;
             childIssueDesc.classList.add("text-xs");
             childIssueItem.appendChild(childIssueTitle);

@@ -21,6 +21,16 @@ class ChildIssuesController < ApplicationController
     @child_issue = item.child_issues.find(params[:id])
   end
 
+  def update
+    @child_issue = item.child_issues.find(params[:id])
+
+    if @child_issue.update(child_issue_params)
+      redirect_to board_path(item.list.board)
+    else
+      render :edit
+    end
+  end
+
   def index
     @child_issue = item.child_issues
   end

@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :items do
-    resources :child_issues, only: [:new, :create, :edit]
+    resources :child_issues, only: [:new, :create, :edit, :update, :destroy]
   end
 
   namespace :api do

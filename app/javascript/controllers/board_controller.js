@@ -177,16 +177,17 @@ export default class extends Controller {
           get(data, "data.attributes.child_issues"),
           (childIssue) => {
             const childIssueItem = document.createElement("ul");
-            const childIssueTitle = document.createElement("li");
+            const childIssueTitle = document.createElement("a");
             const childIssueDesc = document.createElement("li");
-            childIssueTitle.textContent = childIssue.title;
+            childIssueTitle.innerHTML = childIssue.title;
             childIssueTitle.dataset.eid = childIssue.id;
-            // childIssueTitle.href = `/items/${get(
-            //   data,
-            //   `data.id`
-            // )}/child_issues/${dataset.eid}/edit`;
+            childIssueTitle.href = `/items/${get(
+              data,
+              `data.id`
+            )}/child_issues/${childIssue.id}/edit`;
+            childIssueTitle.classList.add("font-medium");
             childIssueDesc.textContent = childIssue.description;
-            childIssueDesc.classList.add("text-xs");
+            // childIssueDesc.classList.add("text-xs");
             childIssueItem.appendChild(childIssueTitle);
             childIssueItem.appendChild(childIssueDesc);
             return childIssueItem;

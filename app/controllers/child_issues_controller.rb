@@ -11,10 +11,14 @@ class ChildIssuesController < ApplicationController
     @child_issue = item.child_issues.new(child_issue_params)
 
     if @child_issue.save
-      redirect_to item_path(item)
+      redirect_to board_path(item.list.board)
     else
       render :new
     end
+  end
+
+  def edit
+    @child_issue = item.child_issues.find(params[:id])
   end
 
   def index

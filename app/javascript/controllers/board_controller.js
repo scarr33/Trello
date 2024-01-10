@@ -141,6 +141,11 @@ export default class extends Controller {
           `data.id`
         )}/child_issues/new`;
 
+        document.getElementById("child-issue-edit-link").href = `/items/${get(
+          data,
+          `data.id`
+        )}/child_issues/18/edit`;
+
         const membersList = map(
           get(data, "data.attributes.members.data"),
           (memberData) => {
@@ -171,9 +176,15 @@ export default class extends Controller {
         const childIssuesList = map(
           get(data, "data.attributes.child_issues"),
           (childIssue) => {
-            const childIssueItem = document.createElement("li");
-            childIssueItem.textContent = childIssue.title;
-            childIssueItem.classList.add("text-sm");
+            const childIssueItem = document.createElement("ul");
+            const childIssueTitle = document.createElement("li");
+            const childIssueDesc = document.createElement("li");
+            childIssueTitle.textContent = childIssue.title;
+            childIssueTitle.dataset.eid = childIssue.id;
+            childIssueDesc.textContent = childIssue.description;
+            childIssueDesc.classList.add("text-xs");
+            childIssueItem.appendChild(childIssueTitle);
+            childIssueItem.appendChild(childIssueDesc);
             return childIssueItem;
           }
         );

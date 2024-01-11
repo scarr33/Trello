@@ -35,7 +35,7 @@ class BoardsController < ApplicationController
   end
 
   def destroy
-    # authorize board
+    authorize board
     board.destroy
     redirect_to root_path
   end

@@ -39,6 +39,7 @@
                     <% else %>
                         <%= link_to "Cancel", root_path, class: "rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
                         <%= f.submit "Update Child Issue", class:"ml-3 inline-flex justify-center rounded-md border border-transparent text-white bg-[#0A3D62] py-2 px-4 cursor-pointer shadow-sm hover:bg-[#092A41] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"%>
+                        <div><%= link_to "Delete", item_child_issue_path(item, child_issue), data: {"turbo-method": :delete }, onclick:"alert('Are you sure?')", class: "ml-3 inline-flex justify-center rounded-md border border-transparent text-white bg-red-500 py-2 px-4 cursor-pointer" %></div>
                     <% end %>
                 </div>
             </div>

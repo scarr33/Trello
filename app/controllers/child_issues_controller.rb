@@ -31,6 +31,12 @@ class ChildIssuesController < ApplicationController
     end
   end
 
+  def destroy
+    @child_issue = item.child_issues.find(params[:id])
+    @child_issue.destroy
+    redirect_to board_path(item.list.board)
+  end
+
   def index
     @child_issue = item.child_issues
   end

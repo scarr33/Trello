@@ -180,7 +180,7 @@ export default class extends Controller {
               data,
               `data.id`
             )}/child_issues/${childIssue.id}/edit`;
-            childIssueItem.classList.add("px-2");
+            childIssueItem.classList.add("px-2", "py-2");
             childIssueTitle.classList.add("font-medium");
             childIssueDesc.textContent = childIssue.description;
             childIssueDesc.classList.add("text-xs");
